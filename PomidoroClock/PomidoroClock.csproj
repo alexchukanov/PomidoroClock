@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Back.png" />
+    <None Remove="Images\button_stop_green.png" />
+    <None Remove="Images\Forward.png" />
+    <None Remove="Images\History.png" />
+    <None Remove="Images\Pause-play.png" />
+    <None Remove="Images\Play.png" />
+    <None Remove="Images\Schedule.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Pause-play.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Back.png" />
+    <EmbeddedResource Include="Images\Schedule.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\button_stop_green.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Forward.png" />
+    <Resource Include="Images\History.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Play.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>
