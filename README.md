@@ -1,2 +1,2 @@
 # PomidoroClock
-Test assigment: develope an WPF/C# app for Pomodoro Technique
+Test assigment: development of WPF/C# app for using Pomodoro Technique
