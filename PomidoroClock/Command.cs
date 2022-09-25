@@ -1,57 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
-namespace PomidoroClock.ViewModel
+namespace PomidoroClock.ViewModel;
+public class Command : ICommand
 {
-    public class Command : ICommand
+    Action _TargetExecuteMethod;
+    Func<bool> _TargetCanExecuteMethod;
+
+    public Command(Action executeMethod)
     {
-        Action _TargetExecuteMethod;
-        Func<bool> _TargetCanExecuteMethod;
+        _TargetExecuteMethod = executeMethod;
+    }
 
-        public Command(Action executeMethod)
+    public Command(Action executeMethod, Func<bool> canExecuteMethod)
+    {
+        _TargetExecuteMethod = executeMethod;
+        _TargetCanExecuteMethod = canExecuteMethod;
+    }
+
+    public void RaiseCanExecuteChanged()
+    {
+        CanExecuteChanged(this, EventArgs.Empty);
+    }
+
+    bool ICommand.CanExecute(object parameter)
+    {
+
+        if (_TargetCanExecuteMethod != null)
         {
-            _TargetExecuteMethod = executeMethod;
+            return _TargetCanExecuteMethod();
         }
 
-        public Command(Action executeMethod, Func<bool> canExecuteMethod)
+        if (_TargetExecuteMethod != null)
         {
-            _TargetExecuteMethod = executeMethod;
-            _TargetCanExecuteMethod = canExecuteMethod;
+            return true;
         }
 
-        public void RaiseCanExecuteChanged()
+        return false;
+    }		
+ 
+    public event EventHandler CanExecuteChanged = delegate { };
+
+    void ICommand.Execute(object parameter)
+    {
+        if (_TargetExecuteMethod != null)
         {
-            CanExecuteChanged(this, EventArgs.Empty);
-        }
-
-        bool ICommand.CanExecute(object parameter)
-        {
-
-            if (_TargetCanExecuteMethod != null)
-            {
-                return _TargetCanExecuteMethod();
-            }
-
-            if (_TargetExecuteMethod != null)
-            {
-                return true;
-            }
-
-            return false;
-        }		
-     
-        public event EventHandler CanExecuteChanged = delegate { };
-
-        void ICommand.Execute(object parameter)
-        {
-            if (_TargetExecuteMethod != null)
-            {
-                _TargetExecuteMethod();
-            }
+            _TargetExecuteMethod();
         }
     }
 }

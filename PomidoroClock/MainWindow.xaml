@@ -6,10 +6,71 @@
         xmlns:local="clr-namespace:PomidoroClock"
         xmlns:converter="clr-namespace:PomidoroClock.ValueConverter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="480" Width="800">
+        Title="MainWindow" Height="500" Width="800">
 
-    <Window.Resources> 
+    <Window.Resources>
         <Style x:Key="RoundButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="FontWeight" Value="Heavy"/>
+            <Setter Property="Foreground" Value="DarkRed"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="8" BorderBrush="Black" BorderThickness="2">
+                                <Border.Background>
+                                    <RadialGradientBrush GradientOrigin="0.496,1.052">
+                                        <RadialGradientBrush.RelativeTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform CenterX="0.5" CenterY="0.5"
+                                      ScaleX="1.5" ScaleY="1.5"/>
+                                                <TranslateTransform X="0.02" Y="0.3"/>
+                                            </TransformGroup>
+                                        </RadialGradientBrush.RelativeTransform>
+                                        <GradientStop Offset="1" Color="#00000000"/>
+                                        <GradientStop Offset="0.3" Color="#FFFFFFFF"/>
+                                    </RadialGradientBrush>
+                                </Border.Background>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border">
+                                    <Setter.Value>
+                                        <RadialGradientBrush GradientOrigin="0.496,1.052">
+                                            <RadialGradientBrush.RelativeTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="1.5" ScaleY="1.5"/>
+                                                    <TranslateTransform X="0.02" Y="0.3"/>
+                                                </TransformGroup>
+                                            </RadialGradientBrush.RelativeTransform>
+                                            <GradientStop Color="#00000000" Offset="1"/>
+                                            <GradientStop Color="#FF303030" Offset="0.3"/>
+                                        </RadialGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF33962B"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CircleButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#00000000"/>
             <Setter Property="BorderBrush" Value="#00000000"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -37,7 +98,8 @@
     <Grid>
         <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center">
 
-            <Label Content="{Binding Result}" Margin="30" FontSize="30" FontFamily="Forte" HorizontalAlignment="Center"/>
+            <Label Content="{Binding Result}" Margin="20" FontSize="30" FontFamily="Forte" HorizontalAlignment="Center"/>
+            
             <Label Content="{Binding PeriodType}" Margin="10" FontSize="30" FontFamily="Forte" FontStyle="Italic" Foreground="Red" HorizontalAlignment="Center"/>
 
             <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
@@ -46,7 +108,7 @@
                 <Label Content="{Binding Second, Converter={StaticResource clockToLeadZeroConverter}, Mode=TwoWay}"  Height="148"  FontSize="60" FontFamily="Forte" />
             </StackPanel>
              <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Margin="10" Style="{StaticResource RoundButtonStyle}" Command = "{Binding BackCommand}">
+                <Button Margin="10" Style="{StaticResource RoundButtonStyle}" Command = "{Binding BackCommand}" IsEnabled="{Binding IsBackEnable}">
                     <Image Source="/Images/Back.png" Width="60"  Height="60"/>
                 </Button>
                 <Button  Margin="10" Style="{StaticResource RoundButtonStyle}" Command = "{Binding PlayCommand}" Visibility="{Binding IsPlayVisible, Converter={StaticResource boolToVisibilityConverter}}">
@@ -55,12 +117,12 @@
                 <Button  Margin="10" Style="{StaticResource RoundButtonStyle}" Command = "{Binding PauseCommand}" Visibility="{Binding IsPauseVisible, Converter={StaticResource boolToVisibilityConverter}}">
                     <Image Source="/Images/Pause-play.png" Width="60"  Height="60"/>
                 </Button>
-                <Button  Margin="10" Style="{StaticResource RoundButtonStyle}" Command = "{Binding ForwardCommand}">
+                <Button  Margin="10" Style="{StaticResource RoundButtonStyle}" Command = "{Binding ForwardCommand}" IsEnabled= "{Binding IsForwardEnable}">
                     <Image Source="/Images/Forward.png" Width="60"  Height="60"/>
                 </Button>
             </StackPanel>
 
-            <TextBlock Margin="30" FontSize="30" FontFamily="Forte" HorizontalAlignment="Center">
+            <TextBlock Margin="20" FontSize="30" FontFamily="Forte" HorizontalAlignment="Center">
                  <Hyperlink Command="{Binding ResetCommand}">Reset</Hyperlink>
             </TextBlock>
         </StackPanel>      
