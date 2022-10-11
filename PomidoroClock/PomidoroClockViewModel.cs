@@ -113,23 +113,16 @@ public class PomidoroClockViewModel : INotifyPropertyChanged
         period = new DateTime(2000, 1, 1, 0, periodLengthInMinute, 0);
         Minute = period.Minute;
         Second = period.Second;
-
-        switch (periodLengthInMinute)
+                
+        PeriodType = periodLengthInMinute switch
         {
-            case 0:
-            case _pomidoroWorkPeriodMinute:
-                PeriodType = $"Work {periodLengthInMinute} min";
-                break;
-            case _pomidoroShortBreakPeriodMinute:
-                PeriodType = $"Break {periodLengthInMinute} min";
-                break;
-            case _pomidoroLongBreakPeriodMinute:
-                PeriodType = $"Rest {periodLengthInMinute}  min";
-                break;
-            default:
-                PeriodType = "";
-                break;
-        }
+            0 => $"Work {periodLengthInMinute} min",
+            _pomidoroWorkPeriodMinute => $"Work {periodLengthInMinute} min",
+            _pomidoroShortBreakPeriodMinute => $"Break {periodLengthInMinute} min",
+            _pomidoroLongBreakPeriodMinute =>  $"Rest {periodLengthInMinute}  min",
+            _ => PeriodType = ""
+        };
+
     }
 
     #region **Properties**

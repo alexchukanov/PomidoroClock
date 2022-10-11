@@ -9,6 +9,20 @@
         Title="MainWindow" Height="500" Width="800">
 
     <Window.Resources>
+
+        <Style x:Key="StringStyle" TargetType="{x:Type Label}">
+            <Setter Property="FontFamily" Value="Forte"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="Blue"/>
+        </Style>
+        <Style x:Key="ClockDigitStyle" TargetType="{x:Type Label}">
+            <Setter Property="FontFamily" Value="Arial Black"/>
+            <Setter Property="FontSize" Value="60"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/> 
+            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="Height" Value="148"/>
+        </Style>          
         <Style x:Key="RoundButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="FontWeight" Value="Heavy"/>
             <Setter Property="Foreground" Value="DarkRed"/>
@@ -98,14 +112,13 @@
     <Grid>
         <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center">
 
-            <Label Content="{Binding Result}" Margin="20" FontSize="30" FontFamily="Forte" HorizontalAlignment="Center"/>
-            
-            <Label Content="{Binding PeriodType}" Margin="10" FontSize="30" FontFamily="Forte" FontStyle="Italic" Foreground="Red" HorizontalAlignment="Center"/>
+            <Label Content="{Binding Result}" Margin="20" Style="{StaticResource StringStyle}"/>
+            <Label Content="{Binding PeriodType}" Margin="10" Foreground="Green"  Style="{StaticResource StringStyle}"/>
 
             <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label Content="{Binding Minute, Converter={StaticResource clockToLeadZeroConverter}, Mode=TwoWay}"  Height="148"  FontSize="60" FontFamily="Forte" />
-                <Label Content=":"  Height="148"  FontSize="60" FontFamily="Forte" />
-                <Label Content="{Binding Second, Converter={StaticResource clockToLeadZeroConverter}, Mode=TwoWay}"  Height="148"  FontSize="60" FontFamily="Forte" />
+                <Label Content="{Binding Minute, Converter={StaticResource clockToLeadZeroConverter}, Mode=TwoWay}" Style="{StaticResource ClockDigitStyle}"/>
+                <Label Content=":"  Style="{StaticResource ClockDigitStyle}"/>
+                <Label Content="{Binding Second, Converter={StaticResource clockToLeadZeroConverter}, Mode=TwoWay}" Style="{StaticResource ClockDigitStyle}"/>
             </StackPanel>
              <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Margin="10" Style="{StaticResource RoundButtonStyle}" Command = "{Binding BackCommand}" IsEnabled="{Binding IsBackEnable}">
@@ -122,9 +135,9 @@
                 </Button>
             </StackPanel>
 
-            <TextBlock Margin="20" FontSize="30" FontFamily="Forte" HorizontalAlignment="Center">
+            <Label Margin="20" FontStyle="Italic" Style="{StaticResource StringStyle}">
                  <Hyperlink Command="{Binding ResetCommand}">Reset</Hyperlink>
-            </TextBlock>
+            </Label>
         </StackPanel>      
     </Grid>
 </Window>
